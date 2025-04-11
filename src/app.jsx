@@ -1,5 +1,6 @@
+import { useState } from 'react'
+import './app.css'
 
-import React, { useState } from 'react';
 
 const App = () => {
   const [team, setTeam] = useState([]);
@@ -7,117 +8,149 @@ const App = () => {
   const [zombieFighters, setZombieFighters] = useState([
     {
       id: 1,
-      name: 'Survivor',
+      name: "Survivor",
       price: 12,
       strength: 6,
       agility: 4,
-      img: 'https://pages.git.generalassemb.ly/modular-curriculum-all-courses/react-state-management-lab/assets/0c2d6b.png',
+      img: "https://pages.git.generalassemb.ly/modular-curriculum-all-courses/react-state-management-lab/assets/0c2d6b.png",
     },
     {
       id: 2,
-      name: 'Scavenger',
+      name: "Scavenger",
       price: 10,
       strength: 5,
       agility: 5,
-      img: 'https://pages.git.generalassemb.ly/modular-curriculum-all-courses/react-state-management-lab/assets/033a16.png',
+      img: "https://pages.git.generalassemb.ly/modular-curriculum-all-courses/react-state-management-lab/assets/033a16.png",
     },
     {
       id: 3,
-      name: 'Shadow',
+      name: "Shadow",
       price: 18,
       strength: 7,
       agility: 8,
-      img: 'https://pages.git.generalassemb.ly/modular-curriculum-all-courses/react-state-management-lab/assets/262c36.png',
+      img: "https://pages.git.generalassemb.ly/modular-curriculum-all-courses/react-state-management-lab/assets/262c36.png",
     },
     {
       id: 4,
-      name: 'Tracker',
+      name: "Tracker",
       price: 14,
       strength: 7,
       agility: 6,
-      img: 'https://pages.git.generalassemb.ly/modular-curriculum-all-courses/react-state-management-lab/assets/3c1e70.png',
+      img: "https://pages.git.generalassemb.ly/modular-curriculum-all-courses/react-state-management-lab/assets/3c1e70.png",
     },
     {
       id: 5,
-      name: 'Sharpshooter',
+      name: "Sharpshooter",
       price: 20,
       strength: 6,
       agility: 8,
-      img: 'https://pages.git.generalassemb.ly/modular-curriculum-all-courses/react-state-management-lab/assets/4b2900.png',
+      img: "https://pages.git.generalassemb.ly/modular-curriculum-all-courses/react-state-management-lab/assets/4b2900.png",
     },
     {
       id: 6,
-      name: 'Medic',
+      name: "Medic",
       price: 15,
       strength: 5,
       agility: 7,
-      img: 'https://pages.git.generalassemb.ly/modular-curriculum-all-courses/react-state-management-lab/assets/5a1e02.png',
+      img: "https://pages.git.generalassemb.ly/modular-curriculum-all-courses/react-state-management-lab/assets/5a1e02.png",
     },
     {
       id: 7,
-      name: 'Engineer',
+      name: "Engineer",
       price: 16,
       strength: 6,
       agility: 5,
-      img: 'https://pages.git.generalassemb.ly/modular-curriculum-all-courses/react-state-management-lab/assets/5e103e.png',
+      img: "https://pages.git.generalassemb.ly/modular-curriculum-all-courses/react-state-management-lab/assets/5e103e.png",
     },
     {
       id: 8,
-      name: 'Brawler',
+      name: "Brawler",
       price: 11,
       strength: 8,
       agility: 3,
-      img: 'https://pages.git.generalassemb.ly/modular-curriculum-all-courses/react-state-management-lab/assets/67060c.png',
+      img: "https://pages.git.generalassemb.ly/modular-curriculum-all-courses/react-state-management-lab/assets/67060c.png",
     },
     {
       id: 9,
-      name: 'Infiltrator',
+      name: "Infiltrator",
       price: 17,
       strength: 5,
       agility: 9,
-      img: 'https://pages.git.generalassemb.ly/modular-curriculum-all-courses/react-state-management-lab/assets/ac3220.png',
+      img: "https://pages.git.generalassemb.ly/modular-curriculum-all-courses/react-state-management-lab/assets/ac3220.png",
     },
     {
       id: 10,
-      name: 'Leader',
+      name: "Leader",
       price: 22,
       strength: 7,
       agility: 6,
-      img: 'https://pages.git.generalassemb.ly/modular-curriculum-all-courses/react-state-management-lab/assets/e41f26.png',
+      img: "https://pages.git.generalassemb.ly/modular-curriculum-all-courses/react-state-management-lab/assets/e41f26.png",
     },
   ]);
 
+  const handleAddFighter = (fighter) => {
+    if (money < fighter.price) { 
+    return 
+    }
+    setTeam((prevTeam) => [...prevTeam, fighter]);
+    setMoney((prevMoney) => prevMoney - fighter.price);
+    setZombieFighters((prevFighters) =>
+      prevFighters.filter((f) => f.id !== fighter.id)
+    );
+  };
+  const handleDeleteFighter = (fighter) => {
+    setTeam((prevTeam) => prevTeam.filter((f) => f.id !== fighter.id));
+    setMoney((prevMoney) => prevMoney + fighter.price);
+    setZombieFighters((prevFighters) => [...prevFighters, fighter]);
+  };
+  
+  
 
+  let totalStrength = 0;
+  let totalAgility = 0;
+  team.forEach((member) => {
+    totalStrength += member.strength;
+    totalAgility += member.agility;
+  });
 
   return (
     <div>
-      <h1>Zombie Fighters</h1>
-      <p>Money: ${money}</p>
+      <h1>Zombie Fighters</h1>` <p>Money: ${money}</p>`
       <ul>
-        {zombieFighters.map(fighter => (
+        {zombieFighters.map((fighter) => (
           <li key={fighter.id}>
-            <h2>{fighter.name}</h2>
-            <p>Price: {fighter.price}</p>
-            <p>Strength: {fighter.strength}</p>
-            <p>Agility: {fighter.agility}</p>
-            <button onClick={() => handleAdd(fighter)}>Add</button>
+            <img src={fighter.img} alt={fighter.name} />
+            <h2><li>{fighter.name}</li></h2>
+            <li>Price: {fighter.price}</li>
+            <li>Strength: {fighter.strength}</li>
+            <li>Agility: {fighter.agility}</li>
+            <button onClick={() => handleAddFighter(fighter)}>Add</button>
           </li>
         ))}
       </ul>
-
-
       <h2>Your Team</h2>
       {team.length === 0 ? (
-   
+        <p>Pick some team members!</p>
       ) : (
-        <ul>
-          {team.map(member => (
-            <li key={member.id}>{member.name}</li>
-          ))}
-        </ul>
+        <div>
+          <ul>
+            {team.map((member) => (
+              <li key={member.id}>
+                <img src={member.img} alt={member.name}  />
+                <h2><li>{member.name}</li></h2>
+                <li>Price: {member.price}</li>
+                <li>Strength: {member.strength}</li>
+                <li>Agility: {member.agility}</li>
+                <button onClick={() => handleDeleteFighter(member)}>Delete</button>
+              </li>
+            ))}
+          </ul>
+          <p>Total Strength: {totalStrength}</p>
+          <p>Total Agility: {totalAgility}</p>
+        </div>
       )}
     </div>
   );
 };
 
-export default App;
+export default App
